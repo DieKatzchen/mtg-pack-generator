@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { SetList, Showcase, StickyNav, Footer } from "./components"
-import { CARD_BACK_URI, TOKEN_CARD_BACK_URI, BOOSTER_ARTS } from "./config"
+import { CARD_BACK_URI, CONTRAPTION_CARD_BACK_URI, TOKEN_CARD_BACK_URI, BOOSTER_ARTS } from "./config"
 
 function App() {
 
@@ -23,11 +23,12 @@ function App() {
 
   function updateShowcase({ cards, tokens = [], promos = [], masterpieces = [] }) {
     const lands = cards.filter(card => card.rarity === "common" && card.type_line.includes('Land'))
-    const commons = cards.filter(card => card.rarity === "common" && !card.type_line.includes('Land'));
-    const uncommons = cards.filter(card => card.rarity === "uncommon");
-    const rares = cards.filter(card => card.rarity === "rare");
+    const commons = cards.filter(card => card.rarity === "common" && !card.type_line.includes('Land') && !card.type_line.includes('Contraption'));
+    const uncommons = cards.filter(card => card.rarity === "uncommon" && !card.type_line.includes('Contraption'));
+    const rares = cards.filter(card => card.rarity === "rare" && !card.type_line.includes('Contraption'));
     const mythics = cards.filter(card => card.rarity === "mythic");
-    setCards({ tokens, promos, lands, commons, uncommons, rares, mythics, masterpieces})
+    const contraptions = cards.filter(card => card.type_line.includes('Contraption'));
+    setCards({ tokens, promos, lands, commons, uncommons, rares, mythics, masterpieces, contraptions})
     commons[0] && setCode(commons[0].set)
   }
 
@@ -48,7 +49,56 @@ function App() {
 
       //doing this to deep clone and modify the cardData freely for each pack
       const cardData = JSON.parse(JSON.stringify(cards))
-
+      
+      //Test for Unstable
+      //16 cards
+      //8 common
+      //3 uncommon
+      //1 rare 
+      // 7/8 rare 1/8 mythic
+      //2 contraptions
+      //1 basic land and 
+      //1 foil token. A randomly inserted premium version may replace any one of these cards
+      if (cards.contraptions.length > 0) {
+        if (cards.tokens.length > 0) {
+          pack.push(cards.tokens[Math.floor(Math.random() * cards.tokens.length)])
+        }
+        if (Math.random() <= 0.0666 && cards.promos.length > 0) {
+        // console.log('adding special card')
+        if (Math.random() <= 0.15 && cards.masterpieces.length > 0) {
+          // console.log('adding masterpiece')
+          pack.push(cards.masterpieces[Math.floor(Math.random() * cards.masterpieces.length)])
+        } else {
+          // console.log('adding promo')
+          pack.push(cards.promos[Math.floor(Math.random() * cards.promos.length)])
+        }
+        } else if (cardData.lands.length > 0) {
+        // console.log('no special card added')
+          pack.push(cardData.lands[Math.floor(Math.random() * cardData.lands.length)])
+        }
+      if (Math.random() > 0.125) {
+        pack.push(cardData.rares[Math.floor(Math.random() * cardData.rares.length)])
+      } else if (cardData.mythics.length > 0) {
+        pack.push(cardData.mythics[Math.floor(Math.random() * cardData.mythics.length)])
+      }
+      for (let i = 0; i < 3; i++) {
+        const index = Math.floor(Math.random() * cardData.uncommons.length)
+        pack.push(cardData.uncommons[index])
+        cardData.uncommons.splice(index, 1)
+      }
+      for (let i = 0; i < 8; i++) {
+        const index = Math.floor(Math.random() * cardData.commons.length)
+        pack.push(cardData.commons[index])
+        cardData.commons.splice(index, 1)
+      }
+        for (let i = 0; i < 2; i++) {
+        const index = Math.floor(Math.random() * cardData.contraptions.length)
+        pack.push(cardData.contraptions[index])
+        cardData.contraptions.splice(index, 1)
+      }
+      }
+      
+      else {
       if (cards.tokens.length > 0) {
         pack.push(cards.tokens[Math.floor(Math.random() * cards.tokens.length)])
 
@@ -80,6 +130,7 @@ function App() {
         const index = Math.floor(Math.random() * cardData.commons.length)
         pack.push(cardData.commons[index])
         cardData.commons.splice(index, 1)
+      }
       }
 
 
