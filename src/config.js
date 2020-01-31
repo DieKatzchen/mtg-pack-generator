@@ -4,6 +4,8 @@ export const CARD_BACK_URI = "https://www.frogtown.me/images/gatherer/CardBack.j
 
 export const TOKEN_CARD_BACK_URI = "https://cdn.discordapp.com/attachments/253343722568286208/665323928318640143/-553-hr.png"
 
+export const CONTRAPTION_CARD_BACK_URI = "https://img.scryfall.com/card_backs/image/large/98/98d277bf-8635-4a02-ac2f-4d44ddc47993.jpg"
+
 export const BOOSTER_ARTS = {
     akh: ['https://i.imgur.com/zRDZwGG.png', 'https://i.imgur.com/ncSkUsA.png', 'https://i.imgur.com/4VZ3eMo.png', 'https://i.imgur.com/EKGdzCj.png', 'https://i.imgur.com/UzDRDVi.png'],
     hou: ['https://i.imgur.com/uztmaPP.png', 'https://i.imgur.com/boVNhYi.png', 'https://i.imgur.com/AsNZMIV.png', 'https://i.imgur.com/QAZX0xz.png', 'https://i.imgur.com/nc7btWJ.png'],
