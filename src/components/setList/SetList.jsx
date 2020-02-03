@@ -18,7 +18,7 @@ const SetList = ({ onSearch }) => {
     const [cardsObject, setCards] = useState({ cards: [], hasMore: false});
     const [tokens, setTokens] = useState([])
     const [specialCards, setSpecialCards] = useState([])
-    const allowedSetTypes = ['core', 'expansion', 'masters', 'draft_innovation']
+    const allowedSetTypes = ['core', 'expansion', 'masters', 'draft_innovation', 'funny']
 
 
     // Similar to componentDidMount and componentDidUpdate:
